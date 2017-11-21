@@ -60,24 +60,64 @@ def inference(images_placeholder, keep_prob):
 
     # 畳み込み層1の作成
     with tf.name_scope('conv1') as scope:
-        W_conv1 = weight_variable([5, 5, 3, 32])
+        W_conv1 = weight_variable([5, 5, 3, 32]) 
         b_conv1 = bias_variable([32])
         h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 
+
+    # 追加
+    # 畳み込み層1の作成
+    with tf.name_scope('conv1_2') as scope:
+        W_conv1_2 = weight_variable([5, 5, 3, 32])
+        b_conv1_2 = bias_variable([32])
+        h_conv1_2 = tf.nn.relu(conv2d(x_image, W_conv1_2) + b_conv1_2)
+
+        
     # プーリング層1の作成
     with tf.name_scope('pool1') as scope:
-        h_pool1 = max_pool_2x2(h_conv1)
+        h_pool1 = max_pool_2x2(h_conv1)    
 
+        
     # 畳み込み層2の作成
     with tf.name_scope('conv2') as scope:
         W_conv2 = weight_variable([5, 5, 32, 64])
         b_conv2 = bias_variable([64])
         h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
+        
+    # 畳み込み層2_2の作成
+    with tf.name_scope('conv2_2') as scope:
+        W_conv2_2 = weight_variable([5, 5, 32, 64])
+        b_conv2_2 = bias_variable([64])
+        h_conv2_2 = tf.nn.relu(conv2d(h_pool1, W_conv2_2) + b_conv2_2)
+        
 
     # プーリング層2の作成
     with tf.name_scope('pool2') as scope:
         h_pool2 = max_pool_2x2(h_conv2)
 
+        
+    # # 畳み込み層3の作成
+    # with tf.name_scope('conv3') as scope:
+    #     W_conv3 = weight_variable([5, 5, 3, 32])
+    #     b_conv3 = bias_variable([32])
+    #     h_conv3 = tf.nn.relu(conv2d(W_pool2, W_conv3) + b_conv3)
+
+    # # プーリング層1の作成
+    # with tf.name_scope('pool3') as scope:
+    #     h_pool3 = max_pool_2x2(h_conv3)
+
+    # # 畳み込み層4の作成
+    # with tf.name_scope('conv4') as scope:
+    #     W_conv4 = weight_variable([5, 5, 32, 64])
+    #     b_conv4 = bias_variable([64])
+    #     h_conv4 = tf.nn.relu(conv2d(h_pool3, W_conv4) + b_conv4)
+
+    # # プーリング層2の作成
+    # with tf.name_scope('pool4') as scope:
+    #     h_pool4 = max_pool_2x2(h_conv4)
+        
+
+    
     # 全結合層1の作成
     with tf.name_scope('fc1') as scope:
         W_fc1 = weight_variable(
@@ -197,7 +237,7 @@ if __name__ == '__main__':
     train_image = np.asarray(train_image)
     train_label = np.asarray(train_label)
     f.close()
-    print "train image: ", len(train_image)
+    print "number of train image: ", len(train_image)
     print "train label: ", train_label
     print "====="
     # print train_image
